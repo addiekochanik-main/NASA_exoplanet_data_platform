@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime, timezone
 
 import pandas as pd
 import requests
@@ -8,8 +9,7 @@ import requests
 #discoverymethod: Method by which the planet was first identified 
 #disc_year: Year the planet was discovered
 #pl_rade: Planet Radius: Length of a line segment from the center of the planet to its surface, measured in units of radius of the earth 
-#pl_orbper: Orbital Period: Reference of publication used for given planet parameter set 
-
+#pl_orbper: Orbital Period: Time a planet takes to complete one orbit, measured in days
 
 
 
@@ -51,7 +51,9 @@ def main():
     output_dir = Path("data/raw")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    output_file = output_dir / "exoplanets_sample.csv"
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    output_file = output_dir / f"exoplanets_{timestamp}.csv"
+    
     df.to_csv(output_file, index=False)
 
     print(f"Successfully downloaded {len(df)} exoplanets!")
@@ -61,5 +63,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-print(f"Downloaded {len}")
