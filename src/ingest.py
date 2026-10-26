@@ -3,13 +3,22 @@ from pathlib import Path
 import pandas as pd
 import requests
 
+#pl_name: Planet name most commonly used in the literature 
+#hostname: Stellar name most commonly used in the literature
+#discoverymethod: Method by which the planet was first identified 
+#disc_year: Year the planet was discovered
+#pl_rade: Planet Radius: Length of a line segment from the center of the planet to its surface, measured in units of radius of the earth 
+#pl_orbper: Orbital Period: Reference of publication used for given planet parameter set 
+
+
+
 
 NASA_API_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
 
 QUERY = """
-SELECT TOP 100
+SELECT
     pl_name,
-    hostname,
+    hostname, 
     discoverymethod,
     disc_year,
     pl_rade,
@@ -52,3 +61,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print(f"Downloaded {len}")
