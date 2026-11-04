@@ -31,7 +31,6 @@ flowchart LR
 
 Prefect coordinates ingestion, loading, and dbt transformations with task retries and a locally configured daily schedule.
 
-
 **Pipeline:** NASA TAP API → Python → S3 → PostgreSQL → dbt → published CSV snapshots → Streamlit Cloud.
 
 Prefect provides task retries and a daily schedule for the ingestion, loading, and transformation workflow.
