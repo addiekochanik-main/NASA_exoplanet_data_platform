@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import datetime, timezone
-
+import boto3
 import pandas as pd
 import requests
 
@@ -12,8 +12,10 @@ import requests
 #pl_orbper: Orbital Period: Time a planet takes to complete one orbit, measured in days
 
 
-
 NASA_API_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
+S3_BUCKET = "nasa-exoplanet-data-platform"
+AWS_PROFILE = "nasa-exoplanet"
+
 
 QUERY = """
 SELECT
@@ -55,6 +57,12 @@ def main():
     output_file = output_dir / f"exoplanets_{timestamp}.csv"
     
     df.to_csv(output_file, index=False)
+
+    session = boto3.Session(profile_name="AWS_PROFILE")
+    s3 = session.client("s3")
+
+    s3.upload_file(str(output_file), "S3_BUCKET", f"raw/{output_file.name}")
+    print(f"Uploaded {output_file.name} to S3!")
 
     print(f"Successfully downloaded {len(df)} exoplanets!")
     print(df.head())
