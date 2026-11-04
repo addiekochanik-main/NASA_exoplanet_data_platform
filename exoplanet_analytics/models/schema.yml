@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: discoveries_by_method
+    columns:
+      - name: discoverymethod
+        data_tests:
+          - not_null
+          - unique
+
+  - name: discoveries_by_year
+    columns:
+      - name: disc_year
+        data_tests:
+          - not_null
+          - unique
+
+  - name: planet_characteristics
+    columns:
+      - name: discoverymethod
+        data_tests:
+          - not_null
+          - unique

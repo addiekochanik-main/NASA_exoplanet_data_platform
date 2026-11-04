@@ -16,3 +16,7 @@ data/raw/
 
 # macOS
 .DS_Store
+# dbt generated files
+exoplanet_analytics/target/
+exoplanet_analytics/logs/
+exoplanet_analytics/dbt_packages/
