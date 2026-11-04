@@ -44,5 +44,13 @@ def nasa_exoplanet_pipeline():
     print("NASA Exoplanet pipeline completed successfully!")
 
 
+from prefect.client.schemas.schedules import CronSchedule
+
 if __name__ == "__main__":
-    nasa_exoplanet_pipeline()
+    nasa_exoplanet_pipeline.serve(
+        name="daily-exoplanet-refresh",
+        schedule=CronSchedule(
+            cron="0 9 * * *",
+            timezone="America/Chicago",
+        ),
+    )
