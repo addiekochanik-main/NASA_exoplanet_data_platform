@@ -112,13 +112,16 @@ def get_dbt_test_results():
 # Navigation
 # --------------------------------------------------
 
-overview_tab, explorer_tab, quality_tab, insights_tab = st.tabs(
+page = st.segmented_control(
+    "Dashboard Section",
     [
         "📊 Overview",
         "🔭 Planet Explorer",
         "🛡️ Data Quality",
         "💡 Insights",
-    ]
+    ],
+    default="📊 Overview",
+    label_visibility="collapsed",
 )
 
 
@@ -126,7 +129,7 @@ overview_tab, explorer_tab, quality_tab, insights_tab = st.tabs(
 # Tab 1: Overview
 # --------------------------------------------------
 
-with overview_tab:
+if page == "📊 Overview":
 
     col1, col2, col3 = st.columns(3)
 
@@ -203,7 +206,7 @@ with overview_tab:
 # Tab 2: Interactive Planet Explorer
 # --------------------------------------------------
 
-with explorer_tab:
+if page == "🔭 Planet Explorer":
 
     st.subheader("Explore NASA Exoplanet Records")
 
@@ -323,7 +326,7 @@ with explorer_tab:
 # Tab 3: Data Quality and Pipeline Health
 # --------------------------------------------------
 
-with quality_tab:
+if page == "🛡️ Data Quality":
 
     st.subheader("Data Quality & Pipeline Health")
 
@@ -435,7 +438,7 @@ with quality_tab:
 # Tab 4: Dynamic Observations & Insights
 # --------------------------------------------------
 
-with insights_tab:
+if page == "💡 Insights":
     st.subheader("💡 Exoplanet Discovery Insights")
     st.write(
         "Automatically generated observations from the latest "
