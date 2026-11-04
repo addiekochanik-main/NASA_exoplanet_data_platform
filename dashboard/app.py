@@ -6,7 +6,6 @@ from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
-import psycopg
 import streamlit as st
 
 
