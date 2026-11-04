@@ -1,4 +1,3 @@
-
 import json
 import os
 from datetime import datetime, timezone
@@ -381,9 +380,7 @@ if page == "🛡️ Data Quality":
 
     st.subheader("Pipeline Execution Evidence")
 
-    
     metadata_path = DATA_DIR / "metadata.json"
-
     if metadata_path.exists():
         with metadata_path.open("r", encoding="utf-8") as file:
             metadata = json.load(file)
@@ -393,24 +390,23 @@ if page == "🛡️ Data Quality":
     snapshot = metadata.get("exported_at_utc")
     dbt_results = metadata.get("dbt_tests")
 
-
     left, right = st.columns(2)
 
     with left:
         st.markdown("**Published Data Snapshot**")
-
         if snapshot:
-            st.success(snapshot)
+            formatted_snapshot = datetime.fromisoformat(
+                snapshot.replace("Z", "+00:00")
+            ).strftime("%b %d, %Y at %I:%M %p UTC")
+            st.success(formatted_snapshot)
         else:
-            st.info("No local snapshot timestamp available.")
+            st.info("No published snapshot timestamp available.")
 
     with right:
         st.markdown("**dbt Test Results at Export**")
-
-        if dbt_results and dbt_results["total"] > 0:
+        if dbt_results and dbt_results.get("total", 0) > 0:
             passed = dbt_results["passed"]
             total_tests = dbt_results["total"]
-
             if passed == total_tests:
                 st.success(f"{passed}/{total_tests} tests passed")
             else:
@@ -418,20 +414,18 @@ if page == "🛡️ Data Quality":
                     f"{passed}/{total_tests} tests passed; "
                     f"{total_tests - passed} did not pass"
                 )
-
-            if dbt_results["generated_at"]:
-                st.caption(
-                    f"dbt artifact generated: "
-                    f"{dbt_results['generated_at']}"
-                )
+            if dbt_results.get("generated_at"):
+                formatted_time = datetime.fromisoformat(
+                    dbt_results["generated_at"].replace("Z", "+00:00")
+                ).strftime("%b %d, %Y at %I:%M %p UTC")
+                st.markdown(f"**Last dbt validation:** {formatted_time}")
         else:
-            st.info("No local dbt test artifact available.")
+            st.info("No published dbt test results available.")
 
-    st.caption(
-        "Data and test results reflect the latest published export, "
-        "not a live database or Prefect connection."
+    st.markdown(
+        "**Data freshness:** This dashboard displays the latest "
+        "published snapshot. Results are not updated in real time."
     )
-
 
 
 # --------------------------------------------------
@@ -596,8 +590,8 @@ if page == "💡 Insights":
         st.info("No valid planet radius measurements available.")
 
     st.caption(
-        "Insights are recalculated from the PostgreSQL dataset "
-        "when the dashboard's cached data refreshes."
+        "Insights are calculated from the latest published "
+        "NASA exoplanet data snapshot."
     )
 
 
