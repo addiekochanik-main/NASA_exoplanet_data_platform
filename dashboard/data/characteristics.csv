@@ -1,0 +1,12 @@
+discoverymethod,total_planets,avg_radius_earth,avg_orbital_period_days
+Transit,4785,4.38,23.29
+Radial Velocity,1204,9.79,1759.72
+Microlensing,292,10.06,3971.39
+Imaging,98,15.56,16374445.66
+Transit Timing Variations,29,8.07,470.42
+Eclipse Timing Variations,17,12.89,3596.20
+Orbital Brightness Modulation,9,9.65,1.17
+Pulsar Timing,8,5.41,1475.79
+Astrometry,6,12.45,865.26
+Pulsation Timing Variations,2,12.75,1005.00
+Disk Kinematics,1,13.30,
